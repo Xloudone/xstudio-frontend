@@ -1,0 +1,45 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    /* Pill shape */
+    font-weight: 500;
+    font-size: 0.9375rem;
+    /* 15px */
+    line-height: 1.25rem;
+    padding: 0.625rem 1.25rem;
+    /* 10px 20px */
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+}
+
+.primary {
+    background-color: #000;
+    color: #fff;
+}
+
+.primary:hover {
+    background-color: #333;
+}
+
+.secondary {
+    background-color: #f5f5f5;
+    color: #111;
+}
+
+.secondary:hover {
+    background-color: #e5e5e5;
+}
+
+.outline {
+    background-color: transparent;
+    border: 1px solid #e5e5e5;
+    color: #111;
+}
+
+.outline:hover {
+    background-color: #f9f9f9;
+}

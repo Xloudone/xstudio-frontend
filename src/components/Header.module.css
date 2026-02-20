@@ -1,0 +1,199 @@
+.header {
+    position: fixed;
+    /* Always shows on scroll */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: transparent;
+    padding: 1.5rem 0;
+    transition: all 0.3s ease;
+}
+
+.scrolled {
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.menuActive {
+    background-color: rgba(248, 248, 248, 0.8) !important;
+    backdrop-filter: blur(60px) !important;
+    -webkit-backdrop-filter: blur(60px) !important;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    /* Increased padding slightly for better edge spacing */
+    position: relative;
+    z-index: 101;
+    /* Stay above megaMenu */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-right: 3rem;
+    /* Space between logo and nav */
+}
+
+.logoImage {
+    object-fit: contain;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+}
+
+.navList {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: #666;
+    /* Light gray text as requested */
+    font-size: 0.9375rem;
+    /* 15px */
+    font-weight: 500;
+    transition: color 0.2s ease;
+    text-decoration: none !important;
+}
+
+.navLink:hover {
+    color: #000;
+    text-decoration: none !important;
+}
+
+.chevron {
+    color: #999;
+    transition: transform 0.2s ease;
+}
+
+.navLink:hover .chevron {
+    color: #666;
+    transform: translateY(1px);
+}
+
+.megaMenu {
+    position: absolute;
+    top: 0;
+    /* Align with top to match header background */
+    left: 0;
+    width: 100%;
+    background-color: rgba(248, 248, 248, 0.8);
+    backdrop-filter: blur(60px);
+    -webkit-backdrop-filter: blur(60px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-top: none;
+    border-bottom-left-radius: 48px;
+    border-bottom-right-radius: 48px;
+    padding: 8rem 2rem 5rem;
+    /* Increased top padding to account for header height */
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    z-index: 99;
+}
+
+.menuContent {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.useCasesContent {
+    display: flex;
+    gap: 8rem;
+    align-items: flex-start;
+}
+
+.menuHeader {
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.menuHeader h3 {
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.readMore {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #999;
+    font-size: 0.875rem;
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.2s ease;
+}
+
+.readMore:hover {
+    color: #333;
+}
+
+.imageGrid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 380px);
+    /* Slightly smaller fixed width */
+    gap: 1.5rem;
+}
+
+.imagePlaceholder {
+    aspect-ratio: 16 / 10;
+    background-color: #f5f5f5;
+    /* Lighter gray */
+    border-radius: 32px;
+    width: 100%;
+}
+
+.chevronWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.resourceLinks {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.resourceLinks li a {
+    color: #999;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    transition: color 0.2s ease;
+    text-decoration: none !important;
+}
+
+.resourceLinks li a:hover {
+    color: #333;
+}

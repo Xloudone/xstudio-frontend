@@ -1,0 +1,101 @@
+.section {
+    padding: 10rem 2rem 10rem;
+    background-color: #fff;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: 500;
+    margin-bottom: 4rem;
+    letter-spacing: -0.02em;
+    color: #333;
+}
+
+.headerRow {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 3rem;
+}
+
+.headerLabel {
+    font-size: 0.9375rem;
+    color: #999;
+    font-weight: 400;
+}
+
+.headerLabel:first-child {
+    text-align: center;
+}
+
+.logList {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.logItem {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    position: relative;
+    padding-bottom: 6rem;
+}
+
+/* Timeline Vertical Line */
+.logItem::before {
+    content: '';
+    position: absolute;
+    left: 175px;
+    /* Half of 350px */
+    top: 50px;
+    bottom: 0px;
+    width: 1px;
+    background-color: #eee;
+    z-index: 0;
+}
+
+.logItem:last-child::before {
+    display: none;
+}
+
+.versionColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+
+.versionPill {
+    border: 1px solid #eee;
+    border-radius: 20px;
+    padding: 0.4rem 1.2rem;
+    font-size: 0.8125rem;
+    color: #999;
+    background-color: #fff;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+}
+
+.date {
+    font-size: 0.9375rem;
+    color: #333;
+    font-weight: 400;
+}
+
+.descriptionColumn {
+    padding-top: 0.5rem;
+}
+
+.description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #333;
+    max-width: 800px;
+}

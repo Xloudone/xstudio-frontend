@@ -1,0 +1,135 @@
+.footer {
+    padding: 4rem 2rem 2rem;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    scroll-snap-align: end;
+}
+
+.coreContainer {
+    width: 100%;
+    max-width: 1400px;
+    background-color: #0d0d0d;
+    border-radius: 48px;
+    padding: 4rem 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Center vertically */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+}
+
+.brandSide {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.logoBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    color: #fff;
+}
+
+.brandName {
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+}
+
+.logoImage {
+    object-fit: contain;
+}
+
+.linksSide {
+    display: flex;
+    gap: 6rem;
+}
+
+.linkColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.columnTitle {
+    color: #fff;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.linkList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.link {
+    color: #888;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+}
+
+.link:hover {
+    color: #fff;
+}
+
+.bottomBar {
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    color: #999;
+    font-size: 0.875rem;
+}
+
+.copyright {
+    font-weight: 400;
+}
+
+.legalLinks {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.legalLink {
+    color: #999;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.legalLink:hover {
+    color: #000;
+}
+
+@media (max-width: 1024px) {
+    .coreContainer {
+        flex-direction: column;
+        gap: 4rem;
+        padding: 3rem;
+    }
+
+    .linksSide {
+        gap: 3rem;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 640px) {
+    .linksSide {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+}
