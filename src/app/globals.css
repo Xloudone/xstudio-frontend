@@ -41,6 +41,7 @@ html {
   scroll-snap-type: y proximity;
   scroll-padding-top: 5rem;
   /* Matches header height */
+  overflow-y: overlay;
 }
 
 .main {
@@ -51,23 +52,14 @@ html {
   min-height: 100vh;
 }
 
-/* Custom Scrollbar */
+/* Hide scrollbar while maintaining functionality */
 ::-webkit-scrollbar {
-  width: 8px;
+  display: none;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 20px;
-  border: 2px solid transparent;
-  background-clip: content-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.3);
-  background-clip: content-box;
+html {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
 }

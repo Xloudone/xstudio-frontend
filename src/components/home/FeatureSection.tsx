@@ -15,11 +15,11 @@ export function FeatureSection() {
                     transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 >
                     <div className={styles.titleGroup}>
-                        <span className={styles.label}>Download</span>
-                        <h2 className={styles.heading}>Download</h2>
+                        <span className={styles.label}>Build. Ship. Repeat.</span>
+                        <h2 className={styles.heading}>Command Center</h2>
                     </div>
                     <p className={styles.description}>
-                        Download
+                        From first commit to production deployment, experience how XStudio eliminates context switching and keeps your entire team in flow.
                     </p>
                 </motion.div>
 

@@ -6,18 +6,18 @@ import styles from './Footer.module.css';
 
 const footerLinks = {
     Product: [
-        { name: 'Download', href: '#' },
-        { name: 'Pricing', href: '#' },
+        { name: 'Download', href: '/#hero' },
+        { name: 'Pricing', href: '/pricing' },
         { name: 'Students', href: '#' },
         { name: 'Enterprises', href: '#' },
     ],
     Resources: [
-        { name: 'Changelog', href: '#' },
-        { name: 'Documentation', href: '#' },
-        { name: 'Support', href: '#' },
+        { name: 'Changelog', href: '/changelog' },
+        { name: 'Documentation', href: '/docs' },
+        { name: 'Support', href: '/support' },
     ],
     Company: [
-        { name: 'Website', href: '#' },
+        { name: 'Website', href: 'https://xloudone.com' },
         { name: 'Manifesto', href: '#' },
     ],
 };
@@ -64,8 +64,8 @@ export function Footer() {
                     2026 XloudOne
                 </div>
                 <div className={styles.legalLinks}>
-                    <Link href="#" className={styles.legalLink}>Terms</Link>
-                    <Link href="#" className={styles.legalLink}>Privacy</Link>
+                    <Link href="/terms" className={styles.legalLink}>Terms</Link>
+                    <Link href="/privacy" className={styles.legalLink}>Privacy</Link>
                 </div>
             </div>
         </footer>

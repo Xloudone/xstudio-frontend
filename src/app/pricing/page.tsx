@@ -5,7 +5,7 @@ import Link from 'next/link';
 const plans = [
     {
         name: "Founder",
-        subtitle: "Pricing",
+        subtitle: "For solo builders",
         price: "$45",
         features: ["hgghh", "gdfgdfg", "gfdgdfg", "gdfgfd", "dfgdf", "gdfgdf", "dfgd", "gfgh"],
         buttonText: "Try Now",
@@ -13,7 +13,7 @@ const plans = [
     },
     {
         name: "Startup",
-        subtitle: "Pricing",
+        subtitle: "For growing teams",
         price: "$99",
         features: ["hgghh", "gdfgdfg", "gfdgdfg", "gdfgfd", "dfgdf", "gdfgdf", "dfgd", "gfgh"],
         buttonText: "Select",
@@ -22,7 +22,7 @@ const plans = [
     },
     {
         name: "Enterprise",
-        subtitle: "Pricing",
+        subtitle: "For organizations building at scale",
         price: "Custom",
         features: ["hgghh", "gdfgdfg", "gfdgdfg", "gdfgfd", "dfgdf", "gdfgdf", "dfgd", "gfgh"],
         buttonText: "Contact Us",
@@ -41,7 +41,7 @@ export default function PricingPage() {
             <div className={styles.container}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>Pricing</h1>
-                    <p className={styles.subtitle}>Pricing</p>
+                    <p className={styles.subtitle}>From solo builder to enterprise team—transparent pricing at every stage.</p>
                 </div>
 
                 <div className={styles.grid}>

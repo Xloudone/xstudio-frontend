@@ -1,0 +1,63 @@
+.section {
+    position: relative;
+    min-height: 100vh;
+    padding: 10rem 2rem 5rem;
+    background-color: #fff;
+    color: #000;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.header {
+    margin-bottom: 4rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 2rem;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.lastUpdated {
+    color: #888;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.content {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+}
+
+.content h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 3rem 0 1.5rem;
+    color: #000;
+}
+
+.content p {
+    margin-bottom: 1.5rem;
+}
+
+.content ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.content li {
+    margin-bottom: 0.75rem;
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2.25rem;
+    }
+}

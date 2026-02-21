@@ -141,6 +141,30 @@
     opacity: 0.8;
 }
 
+.logoBadge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 100px;
+    margin-bottom: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.badgeLogo {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.badgeText {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #333;
+    letter-spacing: 0.02em;
+}
+
 /* Hero Content */
 .content {
     position: relative;
@@ -162,7 +186,7 @@
 }
 
 .subtext {
-    font-size: 1.25rem;
+    font-size: 1.05rem;
     color: #666;
     margin-bottom: 2rem;
     font-weight: 300;
