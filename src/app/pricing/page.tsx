@@ -4,18 +4,58 @@ import Link from 'next/link';
 
 const plans = [
     {
-        name: "Founder",
+        name: "Free",
+        subtitle: "Get started for free",
+        price: "$0",
+        period: "/month",
+        features: [
+            "1 user account",
+            "XStudio Agent: 10 requests/day",
+            "Premium AI: 5 requests/day",
+            "1GB cloud storage",
+            "Basic GitHub sync",
+            "Community support (Discord/forum)",
+            "Web development only"
+        ],
+        buttonText: "Select",
+        variant: "outline"
+    },
+    {
+        name: "Builder",
         subtitle: "For solo builders",
-        price: "$45",
-        features: ["hgghh", "gdfgdfg", "gfdgdfg", "gdfgfd", "dfgdf", "gdfgdf", "dfgd", "gfgh"],
-        buttonText: "Try Now",
+        price: "$49",
+        period: "/month",
+        features: [
+            "1 user account",
+            "Custom XStudio Agent (unlimited) powered by Xognito",
+            "Premium AI: 50 requests/day",
+            "Claude Sonnet: 50/day",
+            "Gemini Pro: 50/day",
+            "10GB cloud storage",
+            "Real-time GitHub sync",
+            "1 guest collaborator",
+            "Community support (Discord/forum)",
+            "Web + mobile development",
+            "Basic security scans"
+        ],
+        buttonText: "Select",
         variant: "outline"
     },
     {
         name: "Startup",
         subtitle: "For growing teams",
-        price: "$99",
-        features: ["hgghh", "gdfgdfg", "gfdgdfg", "gdfgfd", "dfgdf", "gdfgdf", "dfgd", "gfgh"],
+        price: "$117",
+        period: "/month",
+        features: [
+            "3+ user accounts ($39/user/month)",
+            "Everything in Builder",
+            "Premium AI: 150 requests/day per user",
+            "Claude Sonnet: 150/day",
+            "Gemini Pro: 150/day",
+            "25GB storage per user",
+            "Priority support (24-48hr response)",
+            "Enhanced security scans"
+        ],
         buttonText: "Select",
         variant: "popular",
         isPopular: true
@@ -23,10 +63,26 @@ const plans = [
     {
         name: "Enterprise",
         subtitle: "For organizations building at scale",
-        price: "Custom",
-        features: ["hgghh", "gdfgdfg", "gfdgdfg", "gdfgfd", "dfgdf", "gdfgdf", "dfgd", "gfgh"],
-        buttonText: "Contact Us",
-        variant: "outline"
+        price: "",
+        features: [
+            "10+ user accounts ($35/user/month base)",
+            "Everything in Startup",
+            "Premium AI: 500 requests/day per user",
+            "Claude Sonnet/Opus: 500/day",
+            "Gemini Pro: 500/day",
+            "Priority access to new models",
+            "Unlimited storage",
+            "Advanced security features",
+            "SOC 2 compliance ready",
+            "Dedicated support",
+            "4-hour response SLA",
+            "Custom AI model training",
+            "White-label options (negotiable)",
+            "Custom integrations"
+        ],
+        buttonText: "Get Notified",
+        variant: "outline",
+        isComingSoon: true
     }
 ];
 
@@ -48,17 +104,23 @@ export default function PricingPage() {
                     {plans.map((plan, index) => (
                         <div
                             key={index}
-                            className={clsx(styles.card, plan.isPopular && styles.cardPopular)}
+                            className={clsx(styles.card, plan.isPopular && styles.cardPopular, plan.isComingSoon && styles.cardComingSoon)}
                         >
-                            {plan.isPopular && <div className={styles.popularBadge}>Popular</div>}
+                            {plan.isPopular && <div className={styles.popularBadge}>Most Popular</div>}
+                            {plan.isComingSoon && <div className={styles.comingSoonTopBadge}>Coming Soon</div>}
 
                             <h2 className={styles.planName}>{plan.name}</h2>
                             <p className={styles.planSubtitle}>{plan.subtitle}</p>
 
                             <div className={styles.priceRow}>
-                                <span className={clsx(styles.price, plan.price === 'Custom' && styles.priceCustom)}>
-                                    {plan.price}
-                                </span>
+                                {plan.isComingSoon ? (
+                                    <span className={styles.priceCustomLabel}>Custom</span>
+                                ) : (
+                                    <>
+                                        <span className={styles.price}>{plan.price}</span>
+                                        {plan.period && <span className={styles.period}>{plan.period}</span>}
+                                    </>
+                                )}
                             </div>
 
                             <ul className={styles.featureList}>
