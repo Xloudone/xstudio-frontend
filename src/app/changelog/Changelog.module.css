@@ -99,3 +99,50 @@
     color: #333;
     max-width: 800px;
 }
+
+@media (max-width: 768px) {
+    .section {
+        padding: 6rem 1.5rem 6rem;
+    }
+
+    .title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .headerRow {
+        display: none;
+        /* Hide headers on mobile */
+    }
+
+    .logItem {
+        grid-template-columns: 1fr;
+        padding-bottom: 3rem;
+        gap: 1rem;
+    }
+
+    .logItem::before {
+        display: none;
+        /* Hide timeline line */
+    }
+
+    .versionColumn {
+        align-items: flex-start;
+    }
+
+    .versionPill {
+        margin-bottom: 0.25rem;
+    }
+
+    .date {
+        font-size: 0.875rem;
+    }
+
+    .descriptionColumn {
+        padding-top: 0;
+    }
+
+    .description {
+        font-size: 1rem;
+    }
+}

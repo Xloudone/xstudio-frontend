@@ -79,3 +79,30 @@
         min-height: 400px;
     }
 }
+
+@media (max-width: 768px) {
+    .section {
+        padding: 5rem 2rem;
+    }
+
+    .container {
+        width: 100%;
+        gap: 1.5rem;
+    }
+
+    .rightSide {
+        padding-top: 2rem;
+    }
+
+    .heading {
+        font-size: 1.75rem;
+    }
+
+    .leftContainer {
+        min-height: 250px;
+    }
+
+    .rightImageContainer {
+        min-height: 200px;
+    }
+}

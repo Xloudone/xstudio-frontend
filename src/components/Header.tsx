@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronDown, ArrowRight } from 'lucide-react';
+import { ChevronDown, ArrowRight, Menu, X, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import clsx from 'clsx';
 import styles from './Header.module.css';
@@ -20,8 +20,20 @@ export function Header() {
     const [scrolled, setScrolled] = useState(false);
     const [hidden, setHidden] = useState(false);
     const [activeMenu, setActiveMenu] = useState<string | null>(null);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [mobileActiveMenu, setMobileActiveMenu] = useState<string | null>(null);
 
     const [os, setOs] = useState<'windows' | 'mac' | 'other'>('other');
+
+    useEffect(() => {
+        // Prevent scrolling when mobile menu is open
+        if (mobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+        return () => { document.body.style.overflow = 'auto'; }
+    }, [mobileMenuOpen]);
 
     useEffect(() => {
         const platform = window.navigator.platform.toLowerCase();
@@ -39,8 +51,8 @@ export function Header() {
             // Determine scrolled state (for blurred background)
             setScrolled(currentScrollY > 20);
 
-            // Hide/show logic based on scroll direction
-            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            // Hide/show logic based on scroll direction (disable hiding when menu open)
+            if (currentScrollY > lastScrollY && currentScrollY > 100 && !mobileMenuOpen) {
                 // Scrolling down & past threshold -> hide
                 setHidden(true);
                 setActiveMenu(null); // auto-close menu if open
@@ -55,6 +67,16 @@ export function Header() {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    useEffect(() => {
+        // Prevent scrolling when mobile menu is open
+        if (mobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+        return () => { document.body.style.overflow = 'auto'; }
+    }, [mobileMenuOpen]);
 
     const renderIcon = (size = 14) => {
         if (os === 'windows') {
@@ -105,6 +127,7 @@ export function Header() {
                             />
                             <span className={styles.logoText}>studio</span>
                         </Link>
+
                         <nav className={styles.nav}>
                             <ul className={styles.navList}>
                                 {navItems.map((item) => (
@@ -141,6 +164,13 @@ export function Header() {
                             </Button>
                         </Link>
                     </div>
+
+                    <button
+                        className={styles.mobileMenuBtn}
+                        onClick={() => setMobileMenuOpen(true)}
+                    >
+                        <Menu size={24} />
+                    </button>
                 </div>
 
                 <AnimatePresence>
@@ -186,6 +216,91 @@ export function Header() {
                                     </div>
                                 )}
                             </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+                <AnimatePresence>
+                    {mobileMenuOpen && (
+                        <motion.div
+                            className={styles.mobileOverlay}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            <div className={styles.mobileHeader}>
+                                <Image
+                                    src="/XOLogoBlackicon.png"
+                                    alt="xstudio Logo"
+                                    width={24}
+                                    height={24}
+                                    priority
+                                    className={styles.logoImage}
+                                />
+                                <span className={styles.logoText}>studio</span>
+                                <button
+                                    className={styles.mobileCloseBtn}
+                                    onClick={() => {
+                                        setMobileMenuOpen(false);
+                                        setMobileActiveMenu(null);
+                                    }}
+                                >
+                                    <X size={24} />
+                                </button>
+                            </div>
+
+                            <nav className={styles.mobileNav}>
+                                {mobileActiveMenu === null ? (
+                                    <>
+                                        <Link href="/product" className={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>Product</Link>
+                                        <button
+                                            className={styles.mobileNavLinkBtn}
+                                            onClick={() => setMobileActiveMenu('use-cases')}
+                                        >
+                                            Use Cases <ArrowRight size={24} />
+                                        </button>
+                                        <Link href="/pricing" className={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
+                                        <button
+                                            className={styles.mobileNavLinkBtn}
+                                            onClick={() => setMobileActiveMenu('resources')}
+                                        >
+                                            Resources <ArrowRight size={24} />
+                                        </button>
+                                    </>
+                                ) : mobileActiveMenu === 'use-cases' ? (
+                                    <>
+                                        <button className={styles.mobileBackBtn} onClick={() => setMobileActiveMenu(null)}>
+                                            <ArrowLeft size={20} /> Back
+                                        </button>
+                                        <h3 className={styles.mobileSubHeaderTitle}>Use Cases</h3>
+                                        <Link href="/startups" className={styles.mobileSubLink} onClick={() => { setMobileMenuOpen(false); setMobileActiveMenu(null); }}>Startups</Link>
+                                        <Link href="/students" className={styles.mobileSubLink} onClick={() => { setMobileMenuOpen(false); setMobileActiveMenu(null); }}>Students</Link>
+                                        <Link href="/enterprises" className={styles.mobileSubLink} onClick={() => { setMobileMenuOpen(false); setMobileActiveMenu(null); }}>Enterprises</Link>
+                                    </>
+                                ) : mobileActiveMenu === 'resources' ? (
+                                    <>
+                                        <button className={styles.mobileBackBtn} onClick={() => setMobileActiveMenu(null)}>
+                                            <ArrowLeft size={20} /> Back
+                                        </button>
+                                        <h3 className={styles.mobileSubHeaderTitle}>Resources</h3>
+                                        <Link href="/changelog" className={styles.mobileSubLink} onClick={() => { setMobileMenuOpen(false); setMobileActiveMenu(null); }}>Changelog</Link>
+                                        <Link href="/docs" className={styles.mobileSubLink} onClick={() => { setMobileMenuOpen(false); setMobileActiveMenu(null); }}>Documentation</Link>
+                                        <Link href="/support" className={styles.mobileSubLink} onClick={() => { setMobileMenuOpen(false); setMobileActiveMenu(null); }}>Support</Link>
+                                    </>
+                                ) : null}
+
+                                <div className={styles.mobileCtaWrapper}>
+                                    <Link href="/product" onClick={() => { setMobileMenuOpen(false); setMobileActiveMenu(null); }} style={{ width: '100%' }}>
+                                        <Button variant="primary" className={styles.mobileDownloadBtn}>
+                                            <span style={{ display: 'flex', alignItems: 'center' }}>
+                                                {renderIcon()}
+                                                Download for Windows
+                                            </span>
+                                        </Button>
+                                    </Link>
+                                </div>
+                            </nav>
                         </motion.div>
                     )}
                 </AnimatePresence>

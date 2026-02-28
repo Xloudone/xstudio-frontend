@@ -56,7 +56,7 @@ export default function SupportPage() {
                         <ChevronRight className={styles.cardChevron} size={20} />
                     </Link>
 
-                    <Link href="#" className={styles.card}>
+                    <Link href="https://discord.gg/vsH7dJtw5C" target="_blank" rel="noopener noreferrer" className={styles.card}>
                         <div className={styles.iconWrapper}>
                             {/* Discord Icon */}
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">

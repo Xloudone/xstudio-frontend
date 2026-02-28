@@ -128,3 +128,35 @@
         width: 100%;
     }
 }
+
+@media (max-width: 768px) {
+    .section {
+        padding: 5rem 1.5rem;
+        gap: 4rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .featureCard {
+        aspect-ratio: auto;
+        min-height: 200px;
+        padding: 1.5rem;
+    }
+
+    .downloadSection {
+        padding: 5rem 1rem;
+        min-height: 50vh;
+    }
+
+    .downloadTitle {
+        font-size: 1.75rem;
+    }
+
+    .ctaButton {
+        min-width: 100%;
+        /* Full width buttons on mobile */
+        justify-content: center;
+    }
+}
