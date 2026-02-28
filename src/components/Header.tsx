@@ -18,6 +18,7 @@ const navItems = [
 
 export function Header() {
     const [scrolled, setScrolled] = useState(false);
+    const [hidden, setHidden] = useState(false);
     const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
     const [os, setOs] = useState<'windows' | 'mac' | 'other'>('other');
@@ -30,8 +31,25 @@ export function Header() {
             setOs('mac');
         }
 
+        let lastScrollY = window.scrollY;
+
         const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
+            const currentScrollY = window.scrollY;
+
+            // Determine scrolled state (for blurred background)
+            setScrolled(currentScrollY > 20);
+
+            // Hide/show logic based on scroll direction
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                // Scrolling down & past threshold -> hide
+                setHidden(true);
+                setActiveMenu(null); // auto-close menu if open
+            } else if (currentScrollY < lastScrollY) {
+                // Scrolling up -> show
+                setHidden(false);
+            }
+
+            lastScrollY = currentScrollY;
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -59,7 +77,12 @@ export function Header() {
     return (
         <>
             <header
-                className={clsx(styles.header, scrolled && styles.scrolled, activeMenu && styles.menuActive)}
+                className={clsx(
+                    styles.header,
+                    scrolled && styles.scrolled,
+                    hidden && styles.hidden,
+                    activeMenu && styles.menuActive
+                )}
                 onMouseLeave={() => setActiveMenu(null)}
             >
                 <div className={styles.container}>
@@ -75,11 +98,12 @@ export function Header() {
                             <Image
                                 src="/XOLogoBlackicon.png"
                                 alt="xstudio Logo"
-                                width={32}
-                                height={32}
+                                width={24}
+                                height={24}
                                 priority
                                 className={styles.logoImage}
                             />
+                            <span className={styles.logoText}>studio</span>
                         </Link>
                         <nav className={styles.nav}>
                             <ul className={styles.navList}>
@@ -148,7 +172,7 @@ export function Header() {
                                 {activeMenu === 'resources' && (
                                     <div className={styles.useCasesContent}>
                                         <div className={styles.menuHeader}>
-                                            <h3>Download</h3>
+                                            <h3>Resources</h3>
                                             <ul className={styles.resourceLinks}>
                                                 <li><Link href="/changelog" onClick={() => setActiveMenu(null)}>Changelog</Link></li>
                                                 <li><Link href="/docs" onClick={() => setActiveMenu(null)}>Documentation</Link></li>

@@ -9,13 +9,12 @@ const plans = [
         price: "$0",
         period: "/month",
         features: [
-            "1 user account",
-            "XStudio Agent: 10 requests/day",
-            "Premium AI: 5 requests/day",
+            "1 active agent",
+            "XStudio Agent: up to 50 messages/day",
             "1GB cloud storage",
-            "Basic GitHub sync",
+            "Real-time GitHub sync",
             "Community support (Discord/forum)",
-            "Web development only"
+            "Web deployment only"
         ],
         buttonText: "Select",
         variant: "outline"
@@ -26,8 +25,8 @@ const plans = [
         price: "$49",
         period: "/month",
         features: [
-            "1 user account",
-            "Custom XStudio Agent (unlimited) powered by Xognito",
+            "5 concurrent active agents",
+            "Unlimited XStudio Agent usage",
             "Premium AI: 50 requests/day",
             "Claude Sonnet: 50/day",
             "Gemini Pro: 50/day",
@@ -35,7 +34,7 @@ const plans = [
             "Real-time GitHub sync",
             "1 guest collaborator",
             "Community support (Discord/forum)",
-            "Web + mobile development",
+            "Web, Mobile, API deployment",
             "Basic security scans"
         ],
         buttonText: "Select",
@@ -70,6 +69,7 @@ const plans = [
             "Premium AI: 500 requests/day per user",
             "Claude Sonnet/Opus: 500/day",
             "Gemini Pro: 500/day",
+            "8 concurrent active agents per user",
             "Priority access to new models",
             "Unlimited storage",
             "Advanced security features",

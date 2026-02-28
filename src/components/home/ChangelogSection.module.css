@@ -12,13 +12,11 @@
 
 
 .container {
-    width: 100%;
+    max-width: 1400px;
+    width: 85%;
     display: flex;
     gap: 8rem;
-    /* Increased to move cards further right */
     align-items: flex-start;
-    padding-left: 4rem;
-    /* Move content further right */
 }
 
 .titleGroup {
@@ -26,14 +24,15 @@
 }
 
 .title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 500;
     margin-bottom: 1rem;
     letter-spacing: -0.02em;
+    color: #000;
 }
 
 .viewLogs {
-    font-size: 1rem;
+    font-size: 0.875rem;
     color: #888;
     text-decoration: none;
     font-weight: 300;

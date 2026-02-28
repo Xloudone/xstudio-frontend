@@ -13,7 +13,6 @@
     /* Push content up (starts at 25% down instead of 50%) */
     overflow: hidden;
     background-color: #fff;
-    margin-bottom: 10rem;
     scroll-snap-align: center;
     scroll-snap-stop: always;
 }
@@ -146,10 +145,10 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    background: rgba(0, 0, 0, 0.03);
+    background: transparent;
     border-radius: 100px;
     margin-bottom: 0.5rem;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .badgeLogo {
@@ -177,7 +176,7 @@
 }
 
 .heading {
-    font-size: 4rem;
+    font-size: 3.0rem;
     font-weight: 500;
     /* Inter Medium/Regular */
     color: #000;
@@ -186,12 +185,12 @@
 }
 
 .subtext {
-    font-size: 1.05rem;
+    font-size: 0.8125rem;
     color: #666;
     margin-bottom: 2rem;
     font-weight: 300;
 }
 
 .downloadButton {
-    min-width: 160px;
+    min-width: 140px;
 }

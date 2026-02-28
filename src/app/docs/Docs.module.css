@@ -20,6 +20,13 @@
     height: calc(100vh - 8rem);
     border-right: 1px solid #f0f0f0;
     padding-right: 2rem;
+    padding-bottom: 4rem;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.sidebarLeft::-webkit-scrollbar {
+    display: none;
 }
 
 .category {
@@ -100,7 +107,7 @@
 }
 
 .title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 500;
     color: #000;
     margin-bottom: 4rem;
@@ -113,7 +120,7 @@
 }
 
 .sectionHeading {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     font-weight: 500;
     color: #000;
     margin-bottom: 1.5rem;

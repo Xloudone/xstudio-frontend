@@ -27,7 +27,7 @@
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 2rem;
-    width: 85%;
+    width: 70%;
     margin: 0 auto;
 }
 
@@ -46,23 +46,24 @@
 }
 
 .heading {
-    font-size: 2.75rem;
+    font-size: 2.25rem;
     font-weight: 500;
     line-height: 1.2;
     letter-spacing: -0.01em;
+    color: #000;
 }
 
 .description {
     flex: 1;
     min-width: 300px;
-    font-size: 1rem;
+    font-size: 0.875rem;
     line-height: 1.6;
     color: #666;
     max-width: 500px;
 }
 
 .imageContainer {
-    width: 85%;
+    width: 70%;
     margin: 0 auto;
     aspect-ratio: 16 / 9;
     background-color: #e5e5e5;

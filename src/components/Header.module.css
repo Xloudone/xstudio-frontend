@@ -6,7 +6,7 @@
     width: 100%;
     z-index: 100;
     background-color: transparent;
-    padding: 1.5rem 0;
+    padding: 1rem 0;
     transition: all 0.3s ease;
 }
 
@@ -14,7 +14,7 @@
     background-color: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    padding: 1rem 0;
+    padding: 0.75rem 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
@@ -22,6 +22,10 @@
     background-color: rgba(248, 248, 248, 0.8) !important;
     backdrop-filter: blur(60px) !important;
     -webkit-backdrop-filter: blur(60px) !important;
+}
+
+.hidden {
+    transform: translateY(-100%);
 }
 
 .container {
@@ -42,11 +46,22 @@
 .logo {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
     margin-right: 3.5rem;
+    text-decoration: none;
 }
 
 .logoImage {
     object-fit: contain;
+}
+
+.logoText {
+    font-size: 1.125rem;
+    font-weight: 300;
+    color: #000;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    transform: translateY(-1px);
 }
 
 .nav {
@@ -85,8 +100,8 @@
     gap: 0.25rem;
     color: #666;
     /* Light gray text as requested */
-    font-size: 0.9375rem;
-    /* 15px */
+    font-size: 0.8125rem;
+    /* 13px */
     font-weight: 500;
     transition: color 0.2s ease;
     text-decoration: none !important;
@@ -147,10 +162,11 @@
 }
 
 .menuHeader h3 {
-    font-size: 2rem;
+    font-size: 1.25rem;
     font-weight: 500;
     margin: 0;
     letter-spacing: -0.02em;
+    color: #000;
 }
 
 .readMore {
@@ -202,7 +218,7 @@
 
 .resourceLinks li a {
     color: #999;
-    font-size: 0.9375rem;
+    font-size: 0.75rem;
     font-weight: 400;
     transition: color 0.2s ease;
     text-decoration: none !important;
