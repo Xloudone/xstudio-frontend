@@ -8,8 +8,8 @@ const footerLinks = {
     Product: [
         { name: 'Download', href: '/#hero' },
         { name: 'Pricing', href: '/pricing' },
-        { name: 'Students', href: '/use-cases' },
-        { name: 'Enterprises', href: '/use-cases' },
+        { name: 'Students', href: '/students' },
+        { name: 'Enterprises', href: '/enterprises' },
     ],
     Resources: [
         { name: 'Changelog', href: '/changelog' },
