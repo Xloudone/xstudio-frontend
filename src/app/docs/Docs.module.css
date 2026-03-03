@@ -20,6 +20,13 @@
     height: calc(100vh - 8rem);
     border-right: 1px solid #f0f0f0;
     padding-right: 2rem;
+    padding-bottom: 4rem;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.sidebarLeft::-webkit-scrollbar {
+    display: none;
 }
 
 .category {
@@ -100,7 +107,7 @@
 }
 
 .title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 500;
     color: #000;
     margin-bottom: 4rem;
@@ -113,7 +120,7 @@
 }
 
 .sectionHeading {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     font-weight: 500;
     color: #000;
     margin-bottom: 1.5rem;
@@ -168,4 +175,55 @@
 .tocItemActive {
     color: #000;
     font-weight: 500;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 240px 1fr;
+        padding: 0 2rem;
+        gap: 2rem;
+    }
+
+    .sidebarRight {
+        display: none;
+        /* Hide TOC on tablet */
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 5rem 0 0;
+    }
+
+    .container {
+        grid-template-columns: 1fr;
+        padding: 0 1.5rem;
+        gap: 2rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebarLeft {
+        position: relative;
+        top: 0;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #f0f0f0;
+        padding-right: 0;
+        padding-bottom: 2rem;
+    }
+
+    .title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .sectionHeading {
+        font-size: 1.25rem;
+    }
+
+    .contentArea {
+        padding-bottom: 4rem;
+    }
 }

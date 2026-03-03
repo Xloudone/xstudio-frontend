@@ -57,7 +57,7 @@
 }
 
 .title {
-    font-size: 2.75rem;
+    font-size: 2.25rem;
     font-weight: 600;
     margin: 0 0 0.5rem 0;
     letter-spacing: -0.02em;
@@ -65,7 +65,7 @@
 }
 
 .subtitle {
-    font-size: 1rem;
+    font-size: 0.875rem;
     color: #999;
     font-weight: 400;
 }
@@ -239,4 +239,24 @@
     border-color: #000;
     color: #000;
     transform: translateY(-2px);
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 5rem 1.5rem;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
 }
