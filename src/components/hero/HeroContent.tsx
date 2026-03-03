@@ -1,24 +1,16 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
+import { useReleases } from '@/hooks/useReleases';
 import styles from './Hero.module.css';
 
 import Image from 'next/image';
 
 export function HeroContent() {
-    const [os, setOs] = useState<'windows' | 'mac' | 'other'>('other');
-
-    useEffect(() => {
-        const platform = window.navigator.platform.toLowerCase();
-        if (platform.includes('win')) {
-            setOs('windows');
-        } else if (platform.includes('mac')) {
-            setOs('mac');
-        }
-    }, []);
+    const { latestDownloadUrl, loading, os } = useReleases();
 
     const renderIcon = () => {
-        if (os === 'windows') {
+        if (os === 'win') {
             return (
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style={{ marginRight: '8px' }}>
                     <path d="M0 3.449L9.75 2.1V11.7H0V3.449zm0 9.15h9.75V21.9L0 20.55v-7.951zM11.25 1.85L24 0v11.7h-12.75V1.85zm12.75 10.75V24l-12.75-1.85V12.6H24z" />
@@ -75,10 +67,20 @@ export function HeroContent() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
             >
-                <Button className={styles.downloadButton}>
+                <Button
+                    className={styles.downloadButton}
+                    as="a"
+                    href={latestDownloadUrl || '#'}
+                    onClick={(e) => {
+                        if (!latestDownloadUrl) {
+                            e.preventDefault();
+                            alert('Latest release is still loading or not available.');
+                        }
+                    }}
+                >
                     <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         {renderIcon()}
-                        Download
+                        {loading ? 'Fetching...' : 'Download'}
                     </span>
                 </Button>
             </motion.div>

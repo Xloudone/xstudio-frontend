@@ -1,33 +1,39 @@
+'use client';
+
 import styles from './Pricing.module.css';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { useReleases } from '@/hooks/useReleases';
 
 const plans = [
     {
         name: "Free",
+        id: "free",
         subtitle: "Get started for free",
         price: "$0",
         period: "/month",
         features: [
-            "1 user account",
-            "XStudio Agent: 10 requests/day",
-            "Premium AI: 5 requests/day",
+            "XStudio Agent: 20 requests/day",
+            "1 Autonomous agent",
             "1GB cloud storage",
-            "Basic GitHub sync",
+            "Real-time GitHub sync",
             "Community support (Discord/forum)",
-            "Web development only"
+            "Web deployment only"
         ],
-        buttonText: "Select",
+        buttonText: "Download",
         variant: "outline"
     },
     {
         name: "Builder",
+        id: "builder",
         subtitle: "For solo builders",
         price: "$49",
         period: "/month",
+        priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_BUILDER || process.env.STRIPE_LIVE_PRICE_BUILDER,
         features: [
-            "1 user account",
-            "Custom XStudio Agent (unlimited) powered by Xognito",
+            "XStudio Agent (unlimited usage)",
+            "Up to 3 Autonomous agents",
             "Premium AI: 50 requests/day",
             "Claude Sonnet: 50/day",
             "Gemini Pro: 50/day",
@@ -35,20 +41,23 @@ const plans = [
             "Real-time GitHub sync",
             "1 guest collaborator",
             "Community support (Discord/forum)",
-            "Web + mobile development",
+            "Web, Mobile, & API Deployment",
             "Basic security scans"
         ],
-        buttonText: "Select",
+        buttonText: "Download",
         variant: "outline"
     },
     {
         name: "Startup",
+        id: "startup",
         subtitle: "For growing teams",
         price: "$117",
         period: "/month",
+        priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_STARTUP || process.env.STRIPE_LIVE_PRICE_STARTUP,
         features: [
             "3+ user accounts ($39/user/month)",
             "Everything in Builder",
+            "5 Autonomous agents per user",
             "Premium AI: 150 requests/day per user",
             "Claude Sonnet: 150/day",
             "Gemini Pro: 150/day",
@@ -56,12 +65,13 @@ const plans = [
             "Priority support (24-48hr response)",
             "Enhanced security scans"
         ],
-        buttonText: "Select",
+        buttonText: "Download",
         variant: "popular",
         isPopular: true
     },
     {
         name: "Enterprise",
+        id: "enterprise",
         subtitle: "For organizations building at scale",
         price: "",
         features: [
@@ -87,6 +97,66 @@ const plans = [
 ];
 
 export default function PricingPage() {
+    const [loading, setLoading] = useState<string | null>(null);
+    const [userId, setUserId] = useState<string | null>(null);
+    const [isElectron, setIsElectron] = useState(false);
+    const { latestDownloadUrl } = useReleases();
+
+    useEffect(() => {
+        // Check if running in Electron or from URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const uid = urlParams.get('userId');
+        const source = urlParams.get('source');
+
+        if (uid) setUserId(uid);
+        if (source === 'electron' || navigator.userAgent.includes('Electron')) {
+            setIsElectron(true);
+        }
+    }, []);
+
+    const handlePlanSelect = async (plan: typeof plans[0]) => {
+        if (plan.isComingSoon) return;
+
+        // If it's the free plan or user is not logged in, trigger download
+        if (plan.id === 'free' || !userId) {
+            if (latestDownloadUrl) {
+                window.location.href = latestDownloadUrl;
+            } else {
+                // Fallback to releases page if direct download link isn't ready
+                window.location.href = 'https://github.com/Xloudone/Xstudio-Releases/releases';
+            }
+            return;
+        }
+
+        if (!plan.priceId) return;
+
+        setLoading(plan.id);
+
+        try {
+            const response = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    priceId: plan.priceId,
+                    userId: userId,
+                    source: isElectron ? 'electron' : 'web'
+                }),
+            });
+
+            const data = await response.json();
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                throw new Error(data.error || 'Failed to create checkout session');
+            }
+        } catch (error: any) {
+            console.error('Checkout error:', error);
+            alert("Checkout failed: " + error.message);
+        } finally {
+            setLoading(null);
+        }
+    };
+
     return (
         <section className={styles.section}>
             <div className={styles.background}>
@@ -104,7 +174,11 @@ export default function PricingPage() {
                     {plans.map((plan, index) => (
                         <div
                             key={index}
-                            className={clsx(styles.card, plan.isPopular && styles.cardPopular, plan.isComingSoon && styles.cardComingSoon)}
+                            className={clsx(
+                                styles.card,
+                                plan.isPopular && styles.cardPopular,
+                                plan.isComingSoon && styles.cardComingSoon
+                            )}
                         >
                             {plan.isPopular && <div className={styles.popularBadge}>Most Popular</div>}
                             {plan.isComingSoon && <div className={styles.comingSoonTopBadge}>Coming Soon</div>}
@@ -131,15 +205,26 @@ export default function PricingPage() {
                                 ))}
                             </ul>
 
-                            <Link
-                                href="#"
-                                className={clsx(
-                                    styles.button,
-                                    plan.variant === 'popular' ? styles.buttonOutline : styles.buttonDark
-                                )}
-                            >
-                                {plan.buttonText}
-                            </Link>
+                            {plan.isComingSoon ? (
+                                <Link
+                                    href="https://discord.gg/xloudone"
+                                    className={clsx(styles.button, styles.buttonDark)}
+                                >
+                                    {plan.buttonText}
+                                </Link>
+                            ) : (
+                                <button
+                                    onClick={() => handlePlanSelect(plan)}
+                                    disabled={loading !== null}
+                                    className={clsx(
+                                        styles.button,
+                                        plan.variant === 'popular' ? styles.buttonOutline : styles.buttonDark,
+                                        loading === plan.id && styles.buttonLoading
+                                    )}
+                                >
+                                    {loading === plan.id ? 'Loading...' : plan.buttonText}
+                                </button>
+                            )}
                         </div>
                     ))}
                 </div>

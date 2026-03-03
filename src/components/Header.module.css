@@ -1,13 +1,12 @@
 .header {
     position: fixed;
-    /* Always shows on scroll */
     top: 0;
     left: 0;
     width: 100%;
     z-index: 100;
     background-color: transparent;
     padding: 1.5rem 0;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease, padding 0.3s ease, border-color 0.3s ease;
 }
 
 .scrolled {

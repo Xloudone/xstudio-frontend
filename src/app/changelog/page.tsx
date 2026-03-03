@@ -1,33 +1,38 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import { useReleases } from '@/hooks/useReleases';
 import styles from './Changelog.module.css';
 
-const logs = [
-    {
-        version: "1.2.0",
-        date: "Feb 17, 2026",
-        description: "This is a example description of the Change logs."
-    },
-    {
-        version: "1.1.5",
-        date: "Feb 10, 2026",
-        description: "Further improvements to the engine and core modules."
-    },
-    {
-        version: "1.1.0",
-        date: "Feb 03, 2026",
-        description: "Added support for multi-tenant workspaces and improved security protocols."
-    },
-    {
-        version: "1.0.2",
-        date: "Jan 27, 2026",
-        description: "Initial beta release with core foundation and essential UI components."
-    }
-];
+const MAX_CHARACTERS = 300;
+
+function TruncatedDescription({ text }: { text: string }) {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const shouldTruncate = text.length > MAX_CHARACTERS;
+
+    const displayText = isExpanded ? text : text.slice(0, MAX_CHARACTERS) + (shouldTruncate ? '...' : '');
+
+    return (
+        <div>
+            <div className={styles.description}>{displayText}</div>
+            {shouldTruncate && (
+                <button
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    className={styles.readMoreButton}
+                >
+                    {isExpanded ? 'Show Less' : 'See More'}
+                </button>
+            )}
+        </div>
+    );
+}
 
 export default function ChangelogPage() {
+    const { releases, loading, error } = useReleases();
+
     useEffect(() => {
+        if (loading || releases.length === 0) return;
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -40,8 +45,8 @@ export default function ChangelogPage() {
             { rootMargin: '-20% 0% -70% 0%' }
         );
 
-        logs.forEach((log) => {
-            const id = `v${log.version.replace(/\./g, '-')}`;
+        releases.forEach((release) => {
+            const id = `v${release.tag_name.replace(/\./g, '-')}`;
             const el = document.getElementById(id);
             if (el) observer.observe(el);
         });
@@ -61,7 +66,7 @@ export default function ChangelogPage() {
         }
 
         return () => observer.disconnect();
-    }, []);
+    }, [loading, releases]);
 
     return (
         <section className={styles.section}>
@@ -74,20 +79,32 @@ export default function ChangelogPage() {
                 </div>
 
                 <div className={styles.logList}>
-                    {logs.map((log, index) => {
-                        const id = `v${log.version.replace(/\./g, '-')}`;
-                        return (
-                            <div key={index} id={id} className={styles.logItem}>
-                                <div className={styles.versionColumn}>
-                                    <div className={styles.versionPill}>{log.version}</div>
-                                    <span className={styles.date}>{log.date}</span>
+                    {loading ? (
+                        <div className={styles.loading}>Loading releases...</div>
+                    ) : error ? (
+                        <div className={styles.error}>Error loading releases: {error}</div>
+                    ) : (
+                        releases.map((release, index) => {
+                            const id = `v${release.tag_name.replace(/\./g, '-')}`;
+                            return (
+                                <div key={index} id={id} className={styles.logItem}>
+                                    <div className={styles.versionColumn}>
+                                        <div className={styles.versionPill}>{release.tag_name}</div>
+                                        <span className={styles.date}>
+                                            {new Date(release.published_at).toLocaleDateString('en-US', {
+                                                month: 'short',
+                                                day: 'numeric',
+                                                year: 'numeric'
+                                            })}
+                                        </span>
+                                    </div>
+                                    <div className={styles.descriptionColumn}>
+                                        <TruncatedDescription text={release.body} />
+                                    </div>
                                 </div>
-                                <div className={styles.descriptionColumn}>
-                                    <p className={styles.description}>{log.description}</p>
-                                </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })
+                    )}
                 </div>
             </div>
         </section>

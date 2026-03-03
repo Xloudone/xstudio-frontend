@@ -1,0 +1,58 @@
+# Real-time Changelog Integration Guide
+
+Since Xloudstudio (xstudio) is now configured to automatically publish releases to GitHub, your frontend website can pull this data in real-time.
+
+## 📡 1. The Data Source
+GitHub provides a public REST API for releases.
+
+> [!TIP]
+> **Private Repo Strategy**: Since you want to keep your source code private, the standard professional approach is to have a **separate public repository** just for releases (e.g., `Xloudone/Xloudstudio-releases`). 
+> - **Repo A (Private)**: All your source code (Xloudstudio).
+> - **Repo B (Public)**: Only the `.exe` and `latest.yml` files.
+> - Configure `electron-builder` in your private repo to publish its assets to the public repo. This keeps your code 100% hidden while making updates frictionless for customers.
+
+**API Endpoint:**
+`https://api.github.com/repos/Xloudone/Xloudstudio-releases/latest`
+
+## ⚛️ 2. React/Next.js Example Component
+Display the latest release automatically on your website.
+
+```tsx
+import React, { useEffect, useState } from 'react';
+
+interface Release {
+  tag_name: string;      // v0.1.0
+  published_at: string;  // 2026-03-01T...
+  body: string;          // Description from CHANGELOG.md
+  html_url: string;      // GitHub link
+}
+
+const Changelog: React.FC = () => {
+  const [latestRelease, setLatestRelease] = useState<Release | null>(null);
+
+  useEffect(() => {
+    fetch('https://api.github.com/repos/Xloudone/Xloudstudio/releases/latest')
+      .then(res => res.json())
+      .then(data => setLatestRelease(data))
+      .catch(err => console.error("Changelog fetch failed:", err));
+  }, []);
+
+  if (!latestRelease) return <div>Loading updates...</div>;
+
+  return (
+    <div className="changelog-card">
+      <h3>Version: {latestRelease.tag_name}</h3>
+      <p>Published: {new Date(latestRelease.published_at).toLocaleDateString()}</p>
+      <div className="description">
+        {/* Use react-markdown to render the body nicely */}
+        <pre>{latestRelease.body}</pre>
+      </div>
+    </div>
+  );
+};
+```
+
+## 🛠️ 3. How it stays in Sync
+- **Local**: When you run `npm run dist`, [sync-changelog.js](file:///k:/XlouOne/Xstudio/scripts/sync-changelog.js) extracts notes from your [CHANGELOG.md](file:///k:/XlouOne/Xstudio/CHANGELOG.md).
+- **GitHub**: `electron-builder` uploads the release with these notes.
+- **Website**: Your website fetches the `/latest` endpoint, which always points to the most recent published release. No manual website updates are needed!

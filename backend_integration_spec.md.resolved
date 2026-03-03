@@ -1,0 +1,66 @@
+# Technical Specification: Stripe Webhook Integration for Xstudio
+
+This document provides the requirements and sample code for the backend team/agent responsible for `studio.xloudone.com`.
+
+## Objective
+Implement a secure Stripe Webhook handler that updates the shared **Firestore** database when a user completes a purchase. This allows the Xstudio Electron app to verify payment status in real-time.
+
+## 1. Webhook Configuration
+- **Endpoint URL**: `https://studio.xloudone.com/api/webhook/stripe`
+- **Required Events**:
+    - `checkout.session.completed`
+    - `customer.subscription.deleted`
+    - `customer.subscription.updated`
+
+## 2. Shared Firestore Schema
+The handler must update the following document in the shared Firebase project:
+- **Collection**: `users`
+- **Document ID**: `{{userId}}` (Captured from Stripe metadata or `client_reference_id`)
+- **Fields to Update**:
+    - `plan`: (string) "builder" | "startup" | "free"
+    - `stripeSubscriptionId`: (string)
+    - `stripeCustomerId`: (string)
+    - `onboardingCompleted`: (boolean) true
+    - `updatedAt`: (timestamp)
+
+## 3. Implementation Logic (Node.js/Next.js Example)
+
+```typescript
+import Stripe from "stripe";
+import admin from "firebase-admin"; // Should be initialized with service account
+
+const stripe = new Stripe(process.env.STRIPE_LIVE_SECRET_KEY!, { apiVersion: "2026-01-28.clover" });
+
+export async function handleStripeWebhook(body: string, signature: string) {
+    const event = stripe.webhooks.constructEvent(
+        body,
+        signature,
+        process.env.STRIPE_LIVE_WEBHOOK_SECRET!
+    );
+
+    const db = admin.firestore();
+
+    if (event.type === "checkout.session.completed") {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const userId = session.client_reference_id || session.metadata?.userId;
+        const plan = session.metadata?.plan || "builder";
+
+        if (userId) {
+            await db.collection("users").doc(userId).set({
+                plan: plan,
+                stripeSubscriptionId: session.subscription as string,
+                stripeCustomerId: session.customer as string,
+                onboardingCompleted: true,
+                updatedAt: new Date().toISOString(),
+            }, { merge: true });
+        }
+    }
+    
+    // Handle 'customer.subscription.deleted' -> set plan to 'free'
+}
+```
+
+## 4. Security Requirements
+1. **Signature Verification**: ALWAYS verify the `stripe-signature` header using the signing secret.
+2. **Metadata**: Ensure you use the `userId` passed in metadata to avoid updating the wrong account.
+3. **Firestore Permissions**: The service account used by this backend must have write access to the `users` collection in the Firebase project `xstudio-5258f`.

@@ -17,6 +17,13 @@ const sections = [
 
 export default function Home() {
   useEffect(() => {
+    // If coming from Stripe payment (Electron app uses /?stripe=success as success_url)
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('stripe') === 'success') {
+      window.location.replace('/checkout/success');
+      return;
+    }
+
     // Force scroll to top on refresh/mount
     window.scrollTo(0, 0);
 

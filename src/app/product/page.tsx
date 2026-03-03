@@ -5,21 +5,13 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import Image from 'next/image';
 import styles from './Product.module.css';
+import { useReleases } from '@/hooks/useReleases';
 
 export default function ProductPage() {
-    const [os, setOs] = useState<'windows' | 'mac' | 'other'>('other');
-
-    useEffect(() => {
-        const platform = window.navigator.platform.toLowerCase();
-        if (platform.includes('win')) {
-            setOs('windows');
-        } else if (platform.includes('mac')) {
-            setOs('mac');
-        }
-    }, []);
+    const { os, latestDownloadUrl, loading } = useReleases();
 
     const renderIcon = (size = 18) => {
-        if (os === 'windows') {
+        if (os === 'win') {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" style={{ marginRight: '8px' }}>
                     <path d="M0 3.449L9.75 2.1V11.7H0V3.449zm0 9.15h9.75V21.9L0 20.55v-7.951zM11.25 1.85L24 0v11.7h-12.75V1.85zm12.75 10.75V24l-12.75-1.85V12.6H24z" />
@@ -36,7 +28,7 @@ export default function ProductPage() {
         return null;
     };
 
-    const osName = os === 'mac' ? 'macOS' : os === 'windows' ? 'Windows' : 'your device';
+    const osName = os === 'mac' ? 'macOS' : os === 'win' ? 'Windows' : 'your device';
 
     return (
         <main className={styles.section}>
@@ -55,10 +47,20 @@ export default function ProductPage() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                    <Button className={styles.ctaButton}>
+                    <Button
+                        className={styles.ctaButton}
+                        as="a"
+                        href={latestDownloadUrl || '#'}
+                        onClick={(e) => {
+                            if (!latestDownloadUrl) {
+                                e.preventDefault();
+                                alert('Latest release is still loading or not available.');
+                            }
+                        }}
+                    >
                         <span style={{ display: 'flex', alignItems: 'center' }}>
                             {renderIcon()}
-                            Download
+                            {loading ? 'Fetching...' : 'Download'}
                         </span>
                     </Button>
                 </motion.div>
@@ -132,10 +134,20 @@ export default function ProductPage() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                    <Button className={styles.ctaButton}>
+                    <Button
+                        className={styles.ctaButton}
+                        as="a"
+                        href={latestDownloadUrl || '#'}
+                        onClick={(e) => {
+                            if (!latestDownloadUrl) {
+                                e.preventDefault();
+                                alert('Latest release is still loading or not available.');
+                            }
+                        }}
+                    >
                         <span style={{ display: 'flex', alignItems: 'center' }}>
                             {renderIcon(20)}
-                            Download
+                            {loading ? 'Fetching...' : 'Download'}
                         </span>
                     </Button>
                 </motion.div>

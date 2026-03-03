@@ -18,8 +18,8 @@ const navItems = [
 
 export function Header() {
     const [scrolled, setScrolled] = useState(false);
+    const [hidden, setHidden] = useState(false);
     const [activeMenu, setActiveMenu] = useState<string | null>(null);
-
     const [os, setOs] = useState<'windows' | 'mac' | 'other'>('other');
 
     useEffect(() => {
@@ -30,11 +30,21 @@ export function Header() {
             setOs('mac');
         }
 
+        let lastY = window.scrollY;
+
         const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
+            const currentY = window.scrollY;
+            setScrolled(currentY > 20);
+            // Only hide after scrolling past 80px to avoid hiding on tiny nudges at top
+            if (currentY > 80) {
+                setHidden(currentY > lastY);
+            } else {
+                setHidden(false);
+            }
+            lastY = currentY;
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -58,9 +68,11 @@ export function Header() {
 
     return (
         <>
-            <header
+            <motion.header
                 className={clsx(styles.header, scrolled && styles.scrolled, activeMenu && styles.menuActive)}
                 onMouseLeave={() => setActiveMenu(null)}
+                animate={{ y: hidden ? '-100%' : '0%' }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             >
                 <div className={styles.container}>
                     <div className={styles.leftSection}>
@@ -165,7 +177,7 @@ export function Header() {
                         </motion.div>
                     )}
                 </AnimatePresence>
-            </header>
+            </motion.header>
         </>
     );
 }
